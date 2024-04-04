@@ -14,6 +14,8 @@ Position End_List (List L)                                //* hàm trả về v�
 Position Next (Position P, List L)                        //* hàm trả về vị trí sau vị trí P trong danh sách L
 void Insert_List (ElementType X, Position P, List *L)     //* hàm xen phần tử X vào vị trí P trong danh sách L
 void Delete_List (Position P, List *L)                    //* hàm xóa phần tử tại vị trí P trong danh sách L
+void Read_List (int n, List *L)                           //* hàm đọc n số nguyên, lần lượt thêm vào danh sách L theo thứ tự đó
+void Print_List (List L)                                  //* hàm in ra nội dung danh sách L, giữa 2 phần tử cách nhau một khoảng trắng
 ElementType Retrieve(Position P, List L)                  //* hàm trả về nội dung phần tử tại vị trí P trong danh sách L
 Position Locate(ElementType X, List L)                    //* hàm trả về vị trí đầu tiên tìm thấy X trong trong danh sách L. Nếu không tìm thấy, trả về End_List
 
@@ -54,6 +56,21 @@ void Delete_List ( Position P,List *L){
         L->Elements[Q-1] = L->Elements[Q];
     }
     L->Last--;
+}
+
+void Print_List (List L){
+    Position P;
+    for (P = First_List(L); P<End_List(L); P++)
+    {
+        printf("%d ",L.Elements[P-1]);
+    }
+}
+void Read_List (int n, List *L){
+    int x;
+    for (int i = 1; i<=n; i++){
+        scanf("%d", &x);
+        Insert_List(x, i, L);
+    }
 }
 
 ElementType Retrieve (Position P,List L){
