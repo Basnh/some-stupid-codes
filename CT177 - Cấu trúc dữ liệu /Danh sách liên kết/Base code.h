@@ -13,7 +13,7 @@ Position End_List (List L)                                //* hàm trả về v�
 Position Next (Position p, List L)                        //* hàm trả về vị trí sau vị trí p trong danh sách L
 ElementType Retriveve (Position p, List L)                //* hàm trả về giá trị phần tử tại vị trí p trong danh sách L
 void Insert_List (ElementType X, Position p, List *L)     //* hàm xen phần tử X vào vị trí p trong danh sách L
-
+void Delete_List (Position p, List *L)			  //* hàm xóa phần tử tại vị trí p trong danh sách L
 
 
 
@@ -50,5 +50,14 @@ ElementType Retrieve (Position p, List L){
 }
 
 void Insert_List (ElementType X, Position p, List *L){
-  Position T = (Position)
+  Position T = (Position)malloc(sizeof(struct Node));
+  T->Element = X;
+  T->Next = p->Next;
+  p->Next = T;
+}
+
+void Delete_List (Position p, List *L){
+
+
+
 
