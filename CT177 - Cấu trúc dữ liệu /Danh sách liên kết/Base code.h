@@ -13,11 +13,7 @@ Position End_List (List L)                                //* hàm trả về v�
 Position Next (Position p, List L)                        //* hàm trả về vị trí sau vị trí p trong danh sách L
 ElementType Retriveve (Position p, List L)                //* hàm trả về giá trị phần tử tại vị trí p trong danh sách L
 void Insert_List (ElementType X, Position p, List *L)     //* hàm xen phần tử X vào vị trí p trong danh sách L
-void Delete_List (Position p, List *L)			  //* hàm xóa phần tử tại vị trí p trong danh sách L
-
-
-
-
+void Delete_List (Position p, List *L)			  		  //* hàm xóa phần tử tại vị trí p trong danh sách L
 
 
 void MakeNull_List(List* L) {
@@ -57,7 +53,10 @@ void Insert_List (ElementType X, Position p, List *L){
 }
 
 void Delete_List (Position p, List *L){
-
-
-
-
+	Position T;
+	if (p->Next != NULL){
+  		T = p->Next;
+		p->Next = T->Next;
+		free(T);
+	}
+}
