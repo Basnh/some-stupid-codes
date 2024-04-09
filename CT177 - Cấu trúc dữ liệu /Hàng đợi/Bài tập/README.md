@@ -33,9 +33,13 @@ Hãy viết chương trình tính số đơn vị thời gian cần thiết củ
 **Giải thích ví dụ**
 Có 3 công việc, danh sách 1 là 3 2 1; danh sách 2 là 1 3 2. Các bước thực hiện như sau:
 
-**Bước 1:** Lấy công việc đầu tiên trong danh sách 1, đó là công việc #3. Vì trường hợp tối ưu là công việc #1 được thực hiện đầu tiên, do đó công việc #3 được đưa trở lại cuối danh sách 1. Thời gian dành cho bước 1: 1
-**Bước 2:** Lấy công việc kế tiếp trong danh sách 1, đó là công việc #2. Vì trường hợp tối ưu là công việc #1 phải được thực hiện, do đó công việc #2 được đưa trở lại cuối danh sách 1. Thời gian dành cho bước 2: 1
-**Bước 3:** Lấy công việc kế tiếp trong danh sách 1, đó là công việc #1. Đó cũng là công việc cần thực hiện trong trường hợp tối ưu, do đó, thực hiện công việc #1 và lấy chúng ra khỏi các danh sách. Thời gian dành cho bước 3: 1
-**Bước 4:** Lấy công việc kế tiếp trong danh sách 1, đó là công việc #3. Đó cũng là công việc cần thực hiện trong trường hợp tối ưu, do đó, thực hiện công việc #3 và lấy chúng ra khỏi các danh sách. Thời gian dành cho bước 4: 1
-**Bước 5:** Lấy công việc kế tiếp trong danh sách 1, đó là công việc #2. Đó cũng là công việc cần thực hiện trong trường hợp tối ưu, do đó, thực hiện công việc #2 và lấy chúng ra khỏi các danh sách. Thời gian dành cho bước 5: 1
+- **Bước 1:** Lấy công việc đầu tiên trong danh sách 1, đó là công việc #3. Vì trường hợp tối ưu là công việc #1 được thực hiện đầu tiên, do đó công việc #3 được đưa trở lại cuối danh sách 1. Thời gian dành cho bước 1: 
+
+- **Bước 2:** Lấy công việc kế tiếp trong danh sách 1, đó là công việc #2. Vì trường hợp tối ưu là công việc #1 phải được thực hiện, do đó công việc #2 được đưa trở lại cuối danh sách 1. Thời gian dành cho bước 2: 1
+
+- **Bước 3:** Lấy công việc kế tiếp trong danh sách 1, đó là công việc #1. Đó cũng là công việc cần thực hiện trong trường hợp tối ưu, do đó, thực hiện công việc #1 và lấy chúng ra khỏi các danh sách. Thời gian dành cho bước 3: 1
+
+- **Bước 4:** Lấy công việc kế tiếp trong danh sách 1, đó là công việc #3. Đó cũng là công việc cần thực hiện trong trường hợp tối ưu, do đó, thực hiện công việc #3 và lấy chúng ra khỏi các danh sách. Thời gian dành cho bước 4: 1
+
+- **Bước 5:** Lấy công việc kế tiếp trong danh sách 1, đó là công việc #2. Đó cũng là công việc cần thực hiện trong trường hợp tối ưu, do đó, thực hiện công việc #2 và lấy chúng ra khỏi các danh sách. Thời gian dành cho bước 5: 1
 Tổng thời gian thực hiện: 5
