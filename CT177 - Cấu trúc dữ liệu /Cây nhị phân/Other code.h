@@ -9,7 +9,7 @@ int negNodes (Tree T){
         if (T->data < 0) {
             count ++;
         }
-        count += negNodes(T->left);
+        count += negNodes (T->left);
         count += negNodes (T->right);
     }
     return count;
