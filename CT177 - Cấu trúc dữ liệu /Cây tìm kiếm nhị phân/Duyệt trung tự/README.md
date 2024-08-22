@@ -1,5 +1,5 @@
 Cài đặt cấu trúc cây tìm kiếm nhị phân với khóa là số nguyên. Cho trước các khai báo và các phép toán trong tập tin **BSTLib.c** như sau:
-```
+```ruby
 typedef int keyType;
 struct node{
  keyType key;
