@@ -7,8 +7,9 @@ typedef struct {
 	int n, m;
 	Edge edges[MAX_EDGES];
 } Graph;
-Các cung được lưu trong danh sách edges với chỉ số từ 0, 1, 2, ..., m-1
 ```
+Các cung được lưu trong danh sách **edges** với chỉ số từ 0, 1, 2, ..., m-1
+
 Hàm khởi tạo đồ thị:
 ```
 void init_graph(Graph* G, int n){
@@ -17,7 +18,7 @@ void init_graph(Graph* G, int n){
 }
 
 ```
-Viết hàm **add_edge(Graph* G, int x, int y)** để thêm cung (x, y) vào đồ thị G.
+Viết hàm __add_edge(Graph* G, int x, int y)__ để thêm cung (x, y) vào đồ thị G.
 ```
 void add_edge(Graph* G, int x, int y) {
 }
