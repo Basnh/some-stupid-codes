@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Sửa file cấu hình</title>
+</head>
+<body>
+<h2>Sửa file cấu hình</h2>
+<form th:action="@{/save-config}" method="post">
+    <input type="hidden" th:name="configFile" th:value="${configFile}" />
+    <input type="hidden" th:name="host" th:value="${sshRequest.host}" />
+    <input type="hidden" th:name="username" th:value="${sshRequest.username}" />
+    <input type="hidden" th:name="password" th:value="${sshRequest.password}" />
+    <label>Nội dung file:</label><br/>
+    <textarea name="content" th:text="${content}" rows="20" cols="80"></textarea><br/><br/>
+    <button type="submit">Lưu lại</button>
+</form>
+</body>
+</html>

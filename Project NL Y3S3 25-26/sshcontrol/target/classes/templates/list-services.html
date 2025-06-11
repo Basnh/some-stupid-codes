@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head><title>Liệt kê dịch vụ</title></head>
+<body>
+<h2>Liệt kê các dịch vụ đang chạy</h2>
+
+<form th:action="@{/list-services}" th:object="${sshRequest}" method="post">
+    <div th:if="${#strings.isEmpty(sshRequest.host)}">
+        <label>Host:</label>
+        <input type="text" th:field="*{host}" /><br/>
+        <label>Username:</label>
+        <input type="text" th:field="*{username}" /><br/>
+        <label>Password:</label>
+        <input type="password" th:field="*{password}" /><br/><br/>
+    </div>
+    <button type="submit">Liệt kê</button>
+</form>
+
+<div th:if="${result != null}">
+    <h3>Dịch vụ:</h3>
+    <pre th:text="${result}"></pre>
+</div>
+</body>
+</html>
