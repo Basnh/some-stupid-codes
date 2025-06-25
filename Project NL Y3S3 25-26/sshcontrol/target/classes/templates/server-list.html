@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Danh sách máy chủ</title>
+</head>
+<body>
+    <h2>Danh sách máy chủ của bạn</h2>
+    <a th:href="@{/add-server}"><button>Thêm máy chủ</button></a>
+    <table border="1">
+        <tr>
+            <th>Tên máy chủ</th>
+            <th>Địa chỉ IP</th>
+            <th>Đăng nhập SSH</th>
+            <th>Xóa</th>
+        </tr>
+        <tr th:each="server : ${servers}">
+            <td th:text="${server.name}"></td>
+            <td th:text="${server.ip}"></td>
+            <td>
+                <a th:href="@{/server-login(ip=${server.ip})}">Đăng nhập SSH</a>
+            </td>
+            <td>
+                <form th:action="@{/delete-server}" method="post" style="display:inline;">
+                    <input type="hidden" name="ip" th:value="${server.ip}" />
+                    <button type="submit" onclick="return confirm('Bạn có chắc muốn xóa máy chủ này?')">Xóa</button>
+                </form>
+            </td>
+        </tr>
+    </table>
+</body>
+</html>

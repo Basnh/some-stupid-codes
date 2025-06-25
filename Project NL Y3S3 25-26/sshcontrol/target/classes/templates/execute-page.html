@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Thực thi lệnh</title>
+    <script>
+        window.addEventListener('DOMContentLoaded', function() {
+            var form = document.querySelector('form');
+            var input = document.querySelector('input[name="command"], input[th\\:field="*{command}"]');
+            if(form && input) {
+                form.addEventListener('submit', function() {
+                    setTimeout(function() {
+                        input.value = '';
+                    }, 10);
+                });
+            }
+        });
+    </script>
+</head>
+<body>
+<!-- ...existing code... -->
+    <title>Thực thi lệnh</title>
+</head>
+<body>
+<h2>Thực thi lệnh trên máy chủ Ubuntu</h2>
+<form th:action="@{/execute-page}" th:object="${sshRequest}" method="post">
+    <label>Lệnh:</label>
+    <input type="text" th:field="*{command}" placeholder="vd: systemctl status apache2"><br><br>
+    <button type="submit">Thực thi</button>
+</form>
+<div th:if="${result != null}">
+    <h3>Kết quả:</h3>
+    <pre th:text="${result}"></pre>
+</div>
+</body>
+</html>

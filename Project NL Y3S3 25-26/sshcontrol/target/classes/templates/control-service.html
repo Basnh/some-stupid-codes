@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Điều khiển dịch vụ</title>
+</head>
+<body>
+    <h2>Điều khiển dịch vụ trên máy chủ</h2>
+    <form th:action="@{/control-service}" method="post" th:object="${sshRequest}">
+        <label>Tên dịch vụ:</label>
+        <select name="serviceName" required>
+            <option th:each="svc : ${services}" th:value="${svc}" th:text="${svc}" 
+                th:selected="${serviceName == svc}"></option>
+        </select>
+        <br/>
+        <label>Hành động:</label>
+        <select name="action">
+            <option value="start" th:selected="${action == 'start'}">Start</option>
+            <option value="stop" th:selected="${action == 'stop'}">Stop</option>
+            <option value="status" th:selected="${action == 'status'}">Status</option>
+        </select>
+        <br/><br/>
+        <button type="submit">Thực hiện</button>
+    </form>
+    <div th:if="${result != null}">
+        <h3>Kết quả:</h3>
+        <pre th:text="${result}"></pre>
+    </div>
+</body>
+</html>

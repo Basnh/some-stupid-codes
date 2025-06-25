@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Chọn file cấu hình</title>
+</head>
+<body>
+    <h2>Nhập đường dẫn file cấu hình cần sửa</h2>
+    <form th:action="@{/select-config}" method="post">
+        <input type="text" name="configFile" placeholder="/etc/ssh/sshd_config" style="width:80%;" required />
+        <br/><br/>
+        <button type="submit">Tiếp tục</button>
+    </form>
+</body>
+</html>
