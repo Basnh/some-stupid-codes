@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Danh sách máy chủ</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Custom CSS file -->
+    <link rel="stylesheet" href="/styles.css">
+</head>
+<body class="bg-gray-100 font-sans antialiased">
+    <div class="container mx-auto p-6 bg-white shadow-lg rounded-lg mt-10 max-w-3xl">
+        <h2 class="text-3xl font-bold text-gray-800 mb-6 text-center">Danh sách máy chủ của bạn</h2>
+        <div class="flex justify-end mb-4">
+            <a th:href="@{/add-server}" class="px-6 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 transition duration-200 ease-in-out font-semibold flex items-center">
+                <i class="fas fa-plus mr-2"></i> Thêm máy chủ
+            </a>
+        </div>
+        <div class="overflow-x-auto rounded-lg border border-gray-200">
+            <table class="min-w-full divide-y divide-gray-200">
+                <thead class="bg-gray-50">
+                    <tr>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Tên máy chủ</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Địa chỉ IP</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Đăng nhập SSH</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Xóa</th>
+                    </tr>
+                </thead>
+                <tbody class="bg-white divide-y divide-gray-200">
+                    <tr th:each="server : ${servers}">
+                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900" th:text="${server.name}"></td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700" th:text="${server.ip}"></td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm">
+                            <a th:href="@{/server-login(ip=${server.ip})}" class="text-indigo-600 hover:text-indigo-900 font-semibold flex items-center">
+                                <i class="fas fa-sign-in-alt mr-2"></i> Đăng nhập SSH
+                            </a>
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm">
+                            <form th:action="@{/delete-server}" method="post" style="display:inline;">
+                                <input type="hidden" name="ip" th:value="${server.ip}" />
+                                <button type="submit"
+                                    onclick="return confirm('Bạn có chắc muốn xóa máy chủ này?')"
+                                    class="text-red-600 hover:text-red-900 font-semibold flex items-center">
+                                    <i class="fas fa-trash-alt mr-2"></i> Xóa
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                    <tr th:if="${#lists.isEmpty(servers)}">
+                        <td colspan="4" class="px-6 py-4 text-center text-gray-500">Chưa có máy chủ nào.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="mt-8 text-center">
+            <a th:href="@{/dashboard}" class="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition duration-200 ease-in-out">
+                <i class="fas fa-arrow-left mr-2"></i> Quay lại Bảng điều khiển
+            </a>
+        </div>
+    </div>
+</body>
+</html>

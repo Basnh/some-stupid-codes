@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Bảng điều khiển máy chủ</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Custom CSS file -->
+    <link rel="stylesheet" href="/styles.css">
+</head>
+<body class="bg-gray-100 font-sans antialiased">
+    <div class="container mx-auto p-6 bg-white shadow-lg rounded-lg mt-10 max-w-2xl">
+        <h2 class="text-3xl font-bold text-gray-800 mb-8 text-center">Bảng điều khiển máy chủ Ubuntu</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <a th:href="@{/execute-page}" class="block">
+                <div class="flex flex-col items-center p-6 bg-indigo-50 rounded-lg shadow hover:bg-indigo-100 transition">
+                    <i class="fas fa-terminal text-3xl text-indigo-600 mb-3"></i>
+                    <span class="text-lg font-semibold text-indigo-700">Thực thi lệnh</span>
+                </div>
+            </a>
+            <a th:href="@{/list-services}" class="block">
+                <div class="flex flex-col items-center p-6 bg-green-50 rounded-lg shadow hover:bg-green-100 transition">
+                    <i class="fas fa-list text-3xl text-green-600 mb-3"></i>
+                    <span class="text-lg font-semibold text-green-700">Liệt kê dịch vụ</span>
+                </div>
+            </a>
+            <a th:href="@{/select-config}" class="block">
+                <div class="flex flex-col items-center p-6 bg-yellow-50 rounded-lg shadow hover:bg-yellow-100 transition">
+                    <i class="fas fa-file-alt text-3xl text-yellow-600 mb-3"></i>
+                    <span class="text-lg font-semibold text-yellow-700">Sửa file cấu hình</span>
+                </div>
+            </a>
+            <a th:href="@{/control-service}" class="block">
+                <div class="flex flex-col items-center p-6 bg-red-50 rounded-lg shadow hover:bg-red-100 transition">
+                    <i class="fas fa-cogs text-3xl text-red-600 mb-3"></i>
+                    <span class="text-lg font-semibold text-red-700">Điều khiển dịch vụ</span>
+                </div>
+            </a>
+        </div>
+    </div>
+</body>
+</html>
