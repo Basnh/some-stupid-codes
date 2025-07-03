@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Danh sách dịch vụ</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/styles.css">
+</head>
+<body class="bg-gray-100 font-sans antialiased">
+    <div class="container mx-auto p-6 bg-white shadow-lg rounded-lg mt-10">
+        <h2 class="text-3xl font-bold text-gray-800 mb-6 text-center">Danh sách tất cả dịch vụ trên máy chủ</h2>
+
+        <!-- Search Section -->
+        <div class="mb-6 flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0 md:space-x-4">
+            <div class="relative w-full md:w-1/3">
+                <input type="text" id="serviceSearch" placeholder="Tìm kiếm dịch vụ..."
+                       class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 transition duration-200 ease-in-out">
+                <i class="fas fa-search absolute left-3 top-3 text-gray-400"></i>
+            </div>
+        </div>
+
+        <!-- Services Table -->
+        <div class="overflow-x-auto rounded-lg border border-gray-200">
+            <table class="min-w-full divide-y divide-gray-200">
+                <thead class="bg-gray-50">
+                    <tr>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Tên dịch vụ</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Trạng thái</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Mô tả</th>
+                    </tr>
+                </thead>
+                <tbody class="bg-white divide-y divide-gray-200" id="serviceTableBody">
+                    <tr th:each="line : ${services}"
+                        th:if="${#strings.arraySplit(line, ' ').length >= 4}" class="service-row">
+                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900"
+                            th:text="${#strings.arraySplit(line, ' ')[0]}"></td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm">
+                            <span th:classappend="${#strings.arraySplit(line, ' ')[2] == 'active' ? 'bg-green-100 text-green-800' : (#strings.arraySplit(line, ' ')[2] == 'inactive' ? 'bg-red-100 text-red-800' : 'bg-gray-100 text-gray-800')} + ' px-2 inline-flex text-xs leading-5 font-semibold rounded-full'"
+                                  th:text="${#strings.arraySplit(line, ' ')[2]}"></span>
+                        </td>
+                        <td class="px-6 py-4 text-sm text-gray-500"
+                            th:text="${#strings.substring(line, #strings.indexOf(line, #strings.arraySplit(line, ' ')[3]) + #strings.arraySplit(line, ' ')[3].length() + 1)}"></td>
+                    </tr>
+                    <tr th:if="${#lists.isEmpty(services)}">
+                        <td colspan="3" class="px-6 py-4 whitespace-nowrap text-center text-sm text-gray-500">Không tìm thấy dịch vụ nào.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Pagination -->
+        <div class="mt-6 flex justify-center items-center space-x-2">
+            <button id="prevPage" class="px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-200 disabled:opacity-50 disabled:cursor-not-allowed">Trước</button>
+            <span id="pageInfo" class="text-sm text-gray-700">Trang 1/1</span>
+            <button id="nextPage" class="px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-200 disabled:opacity-50 disabled:cursor-not-allowed">Sau</button>
+        </div>
+
+        <div class="mt-8 text-center">
+            <a th:href="@{/dashboard}" class="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition duration-200 ease-in-out">
+                <i class="fas fa-arrow-left mr-2"></i> Quay lại Bảng điều khiển
+            </a>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const serviceSearch = document.getElementById('serviceSearch');
+            const serviceTableBody = document.getElementById('serviceTableBody');
+            const rows = Array.from(serviceTableBody.getElementsByTagName('tr'));
+
+            // Pagination variables
+            const rowsPerPage = 10;
+            let currentPage = 1;
+            let filteredRows = [];
+
+            function displayRows(page) {
+                serviceTableBody.innerHTML = '';
+                const start = (page - 1) * rowsPerPage;
+                const end = start + rowsPerPage;
+                const paginatedItems = filteredRows.slice(start, end);
+
+                if (paginatedItems.length === 0) {
+                    const noResultsRow = document.createElement('tr');
+                    noResultsRow.innerHTML = `<td colspan="3" class="px-6 py-4 whitespace-nowrap text-center text-sm text-gray-500">Không tìm thấy dịch vụ nào.</td>`;
+                    serviceTableBody.appendChild(noResultsRow);
+                } else {
+                    paginatedItems.forEach(row => serviceTableBody.appendChild(row));
+                }
+
+                updatePaginationControls();
+            }
+
+            function updatePaginationControls() {
+                const totalPages = Math.ceil(filteredRows.length / rowsPerPage);
+                document.getElementById('pageInfo').textContent = `Trang ${currentPage}/${totalPages || 1}`;
+                document.getElementById('prevPage').disabled = currentPage === 1;
+                document.getElementById('nextPage').disabled = currentPage === totalPages || totalPages === 0;
+            }
+
+            function filterServices() {
+                const searchTerm = serviceSearch.value.toLowerCase();
+                filteredRows = rows.filter(row => {
+                    const serviceName = row.cells[0].textContent.toLowerCase();
+                    return serviceName.includes(searchTerm);
+                });
+                currentPage = 1;
+                displayRows(currentPage);
+            }
+
+            filterServices();
+
+            serviceSearch.addEventListener('keyup', filterServices);
+
+            document.getElementById('prevPage').addEventListener('click', function() {
+                if (currentPage > 1) {
+                    currentPage--;
+                    displayRows(currentPage);
+                }
+            });
+
+            document.getElementById('nextPage').addEventListener('click', function() {
+                const totalPages = Math.ceil(filteredRows.length / rowsPerPage);
+                if (currentPage < totalPages) {
+                    currentPage++;
+                    displayRows(currentPage);
+                }
+            });
+        });
+    </script>
+</body>
+</html>

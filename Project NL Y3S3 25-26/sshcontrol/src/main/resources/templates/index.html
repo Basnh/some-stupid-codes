@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trang Chủ - Điều Khiển Máy Chủ Từ Xa</title>
+    <link rel="stylesheet" href="/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="bg-gray-100 font-sans antialiased" xmlns:th="http://www.thymeleaf.org">
+    <header class="bg-indigo-600 text-white">
+        <div class="container mx-auto p-6">
+            <h1 class="text-4xl font-bold">Điều Khiển Máy Chủ Từ Xa</h1>
+            <p class="mt-2 text-lg">Quản lý và điều khiển các dịch vụ trên máy chủ Ubuntu của bạn một cách dễ dàng.</p>
+        </div>
+    </header>
+
+    <main class="container mx-auto p-6">
+        <div th:if="${session.user == null}">
+            <section class="mt-8 max-w-md mx-auto bg-white shadow-md rounded-lg p-6 text-center">
+                <h2 class="text-3xl font-semibold text-gray-800 mb-4">Chào mừng bạn đến với Điều Khiển Máy Chủ Từ Xa</h2>
+                <p class="mb-6 text-gray-600">Vui lòng đăng nhập hoặc đăng ký để bắt đầu quản lý máy chủ của bạn.</p>
+                <div class="flex justify-center gap-4">
+                    <a href="/login" class="px-6 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700">Đăng Nhập</a>
+                    <a href="/register" class="px-6 py-2 bg-gray-600 text-white rounded-md hover:bg-gray-700">Đăng Ký</a>
+                </div>
+            </section>
+        </div>
+
+        <div th:if="${session.user != null}">
+            <section class="mt-8">
+                <h2 class="text-3xl font-semibold text-gray-800">Chức Năng Chính</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-4">
+                    <div class="bg-white shadow-md rounded-lg p-4 text-center hover:shadow-lg transition-shadow duration-300">
+                        <i class="fas fa-server text-4xl text-indigo-600"></i>
+                        <h3 class="text-xl font-semibold mt-2">Quản Lý Dịch Vụ</h3>
+                        <p class="mt-1 text-gray-600">Khởi động, dừng và kiểm tra trạng thái các dịch vụ.</p>
+                        <a href="/list-services" class="mt-4 inline-block px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700">Xem Dịch Vụ</a>
+                    </div>
+                    <div class="bg-white shadow-md rounded-lg p-4 text-center hover:shadow-lg transition-shadow duration-300">
+                        <i class="fas fa-terminal text-4xl text-indigo-600"></i>
+                        <h3 class="text-xl font-semibold mt-2">Truy Cập Terminal</h3>
+                        <p class="mt-1 text-gray-600">Thực hiện các lệnh trực tiếp trên máy chủ của bạn.</p>
+                        <a href="/terminal" class="mt-4 inline-block px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700">Mở Terminal</a>
+                    </div>
+                    <div class="bg-white shadow-md rounded-lg p-4 text-center hover:shadow-lg transition-shadow duration-300">
+                        <i class="fas fa-cogs text-4xl text-indigo-600"></i>
+                        <h3 class="text-xl font-semibold mt-2">Cài Đặt</h3>
+                        <p class="mt-1 text-gray-600">Cấu hình và quản lý các thiết lập máy chủ.</p>
+                        <a href="/settings" class="mt-4 inline-block px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700">Cài Đặt</a>
+                    </div>
+                </div>
+            </section>
+
+            <section class="mt-8">
+                <h2 class="text-3xl font-semibold text-gray-800">Thông Tin Liên Hệ</h2>
+                <p class="mt-2 text-gray-600">Nếu bạn cần hỗ trợ, hãy liên hệ với chúng tôi qua email: <a href="mailto:support@example.com" class="text-indigo-600">support@example.com</a></p>
+            </section>
+        </div>
+    </main>
+
+    <footer class="bg-gray-800 text-white text-center p-4 mt-10">
+        <p>&copy; 2023 Điều Khiển Máy Chủ Từ Xa. Tất cả quyền được bảo lưu.</p>
+    </footer>
+</body>
+</html>
