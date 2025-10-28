@@ -1,10 +1,13 @@
-# Basic ICMP test 
+# /etc/snort/rules/local.rules
+# Local custom rules (cleaned & corrected)
+
+# Basic ICMP test (one rule)
 alert icmp any any -> $HOME_NET any (msg:"ICMP test detected"; sid:1000001; rev:1; classtype:icmp-event;)
 
-# ICMP Ping detection 
+# ICMP Ping detection (single rule for ping)
 alert icmp any any -> any any (msg:"ICMP Ping detected"; sid:1000002; rev:1; classtype:icmp-event;)
 
-# Possible Ping Flood 
+# Possible Ping Flood (rate-based detection)
 alert icmp any any -> $HOME_NET any (msg:"Possible Ping Flood Attack"; detection_filter:track by_dst, count 100, seconds 10; sid:1000007; rev:1; classtype:attempted-dos;)
 
 # Possible CharGEN (chargen) reflection flood
@@ -13,10 +16,11 @@ alert udp any any -> any 19 (msg:"Possible CharGEN Flood Attack"; detection_filt
 # UDP flood detection
 alert udp any any -> $HOME_NET any (msg:"Potential UDP Flood attack"; detection_filter:track by_dst, count 100, seconds 10; sid:1000005; rev:1; classtype:attempted-dos;)
 
-# Ping of Death 
+# Ping of Death (very large ICMP payload)
 alert icmp any any -> $HOME_NET any (msg:"Ping of Death Attempt"; dsize:>65535; sid:1000004; rev:1; classtype:attempted-dos;)
 
-# Possible SYN Flood 
-alert tcp any any -> $HOME_NET any (msg:"Possible SYN Flood Attack"; flags:S; detection_filter:track by_dst, count 100, seconds 10; sid:1000006; rev:1; classtype:attempted>
-# Possible HTTP GET Flood 
-alert tcp any any -> $HTTP_SERVERS 80 (msg:"Possible HTTP GET Flood Attack"; content:"GET /"; http_method; detection_filter:track by_dst, count 50, seconds 10; sid:2000001>
+# Possible SYN Flood (look for many SYNs)
+alert tcp any any -> $HOME_NET any (msg:"Possible SYN Flood Attack"; flags:S; detection_filter:track by_dst, count 100, seconds 10; sid:1000006; rev:1; classtype:attempted-dos;)
+
+# Possible HTTP GET Flood (simple signature for many GETs)
+alert tcp any any -> $HTTP_SERVERS 80 (msg:"Possible HTTP GET Flood Attack"; content:"GET /"; http_method; detection_filter:track by_dst, count 50, seconds 10; sid:2000001; rev:1; classtype:web-application-attack;)
