@@ -1,1 +1,32 @@
 --- Syn_flood.py
+alert tcp any any -> $HOME_NET any (msg:"Possible SYN Flood Attack"; flags:S; detection_filter:track by_dst, count 100, seconds 10; sid:1000006; rev:1; classtype:attempted-dos;)
+(source: https://www.ijcaonline.org/archives/volume178/number40/karmadenur-2019-ijca-919283.pdf)
+
+-- Ping_flood.py
+alert icmp any any -> $HOME_NET any (msg:"Possible Ping Flood"; detection_filter:track by_dst, count 100, seconds 10; sid:1000007; rev:1; classtype:attempted-dos;)
+(source: https://securemyorg.com/snort-rules-cheatsheet-securemyorg
+
+-- HTTP_flood.py
+alert tcp any any -> 192.168.1.5 80 (msg:"GET Request flood attempt"; \flow:to_server,established; content:"GET"; nocase; http_method; \detection_filter:track by_src, count 30, seconds 30; metadata: service http;)
+(source: https://stackoverflow.com/questions/28395370/snort-rule-to-detect-http-flood)
+
+-- Slowris.py
+alert tcp $EXTERNAL_NET any -> $HOME_NET $HTTP_PORTS (msg:"SlowLoris.py DoS attempt"; \
+    flow:established,to_server,no_stream; content:"X-a:"; dsize:<15; \
+    detection_filter:track by_dst, count 3, seconds 30; \
+    classtype:denial-of-service; sid:1; rev:1; )
+
+event_filter gen_id 1, sig_id 1, type limit, track by_src, count 1, seconds 5
+(source: https://security.stackexchange.com/questions/174454/ids-snort-rule-to-catch-slow-loris / https://hackmd.io/@reamberine/r1SLCKK_Y?stext=8360%3A350%3A0%3A1761642567%3AVe7wt4)
+
+-- PoD.py
+alert ip $EXTERNAL_NET any -> $HOME_NET any (msg: "Ping of death detected";sid:1;dsize:>500;)
+(source: https://hackmd.io/@reamberine/r1SLCKK_Y?stext=6221%3A98%3A0%3A1761642507%3ABLXkUN)
+
+-- UDP_flood.py
+alert udp $EXTERNAL_NET any -> $HOME_NET any (msg:"UDP Flood"; flow: stateless; detection_filter: track by_dst, count 10, seconds 60; sid:10000009; rev:0;)
+(source: https://gusfowler.com/wp-content/uploads/2023/01/project3-cse468.pdf)
+
+-- Smurf.py
+alert icmp $HOME_NET any -> 16.255.255.255 any (msg:"ICMP Smurf Flood - source internal to broadcast"; sid:10000008)
+(source: https://gusfowler.com/wp-content/uploads/2023/01/project3-cse468.pdf)
